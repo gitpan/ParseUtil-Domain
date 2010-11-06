@@ -3,7 +3,7 @@ package ParseUtil::Domain;
 use strict;
 use warnings;
 
-use version 0.77; our $VERSION = qv("v1.0.0");
+use version 0.77; our $VERSION = qv("v1.0.1");
 use Perl6::Export::Attrs;
 use ParseUtil::Domain::ConfigData;
 use Net::IDN::Encode ':all';
@@ -50,42 +50,48 @@ sub _find_zone {    #{{{
     my $tld_regex       = ParseUtil::Domain::ConfigData->config('tld_regex');
     my $tld             = pop @{$domain_segments};
     my $sld             = pop @{$domain_segments};
+    my $thld            = pop @{$domain_segments};
 
-    my ($possible_tld);
+    my ( $possible_tld, $possible_thld );
+    my ( $sld_zone_ace, $tld_zone_ace ) =
+      map { domain_to_ascii( nameprep $_) }$sld, $tld;
+      my $thld_zone_ace;
+       $thld_zone_ace = domain_to_ascii( nameprep $thld) if $thld;
     if ( $tld =~ /^de$/ ) {
         ### is a de domain
         $possible_tld = join "." => $tld, _puny_encode($sld);
-
     }
     else {
-        $possible_tld = join "." => map { domain_to_ascii( nameprep $_) } $tld,
-          $sld;
+        $possible_tld  = join "." => $tld_zone_ace, $sld_zone_ace;
+        $possible_thld = join "." => $possible_tld, $thld_zone_ace if
+        $thld_zone_ace;
+    }
+    my ( $zone, @zone_params );
 
-    }
-    my @zone_params;
-    if ( $possible_tld =~ /\A$tld_regex\z/ ) {
-        my $zone_ace = join "." => map { domain_to_ascii( nameprep $_) } $sld,
-          $tld;
-        my $zone = join "." => $sld, $tld;
+    if ($possible_thld and  $possible_thld =~ /\A$tld_regex\z/ ) {
+        my $zone_ace = join "." => $thld_zone_ace, $sld_zone_ace, $tld_zone_ace;
+        $zone = join "." => $thld, $sld, $tld;
         push @zone_params, zone_ace => $zone_ace;
-        return {
-            zone   => domain_to_unicode($zone),
-            domain => $domain_segments,
-            @zone_params,
-        };
     }
-    my $zone_ace = domain_to_ascii( nameprep $tld);
-    if ( $zone_ace =~ /\A$tld_regex\z/ ) {
+    elsif ( $possible_tld =~ /\A$tld_regex\z/ ) {
+        push @{$domain_segments}, $thld;
+        my $zone_ace = join "." =>$sld_zone_ace, $tld_zone_ace ;
+        $zone = join "." => $sld, $tld;
+        push @zone_params, zone_ace => $zone_ace;
+    }
+    elsif ( $tld_zone_ace =~ /\A$tld_regex\z/ ) {
+        push @{$domain_segments}, $thld if $thld;
         push @{$domain_segments}, $sld;
-        push @zone_params, zone_ace => $zone_ace;
-
-        return {
-            zone   => domain_to_unicode($tld),
-            domain => $domain_segments,
-            @zone_params
-        };
+        push @zone_params, zone_ace => $tld_zone_ace;
+        $zone = $tld;
     }
-    die "Could not find tld.";
+    die "Could not find tld." unless $zone;
+    my $unicode_zone = domain_to_unicode($zone);
+    return {
+        zone   => $unicode_zone,
+        domain => $domain_segments,
+        @zone_params
+    };
 }    #}}}
 
 sub _punycode_segments {    #{{{
@@ -162,9 +168,9 @@ components.
 
 Just another tool for parsing domain names.  This module makes use of the data
 provided by the I<Public Suffix List> (http://publicsuffix.org/list/) to parse
-tlds.  For completeness it also tries to provide the puny encoded and decoded
-domain and tld part of a domain name. 
-
+tlds.  For completeness it tries to provide the respective puny encoded and decoded
+domain and tld part of a domain name.  This includes proper handling of the
+B<LATIN SHARP S> which is now allowed by DENIC eG (.de).
 
 
 =head1 INTERFACE
@@ -276,12 +282,9 @@ The Public Suffix List at http://publicsuffix.org/list/
 
 =head1 BUGS
 
-There could be problems handling some IDN domains and tlds (particularly for
-B<.de> domains).  Due to the fact that the .de registry has recently started
-allowing the German "Sharp S" which is automatically converted to B<ss> by most
-puny encoders, I've had to bypass the I<nameprep> step by just using the
-L<encode_punycode|Net::IDN::Punycode/"encode_punycode"> subroutine directly.
-
+Although, not necessarily a bug, be wary of differences in encoding/decoding
+domains ending in B<.de>.  These domains are not I<nameprep>ed like other tlds
+in order to allow for encoding of the German B<LATIN SHARP S>.
 
 
 
