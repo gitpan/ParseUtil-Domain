@@ -3,7 +3,15 @@ abstract: "Utility for parsing domain name into its constituent\ncomponents."
 author:
   - 'William Travis Holton <wtravisholton@yahoo.de>'
 build_requires:
+  Net::IDN::Encode: 0
+  Perl::Critic: 0
   Regexp::Assemble::Compressed: 0
+  Smart::Comments: 0
+  Test::Class: 0
+  Test::Deep: 0
+  Test::More: 0
+  Test::Perl::Critic: 0
+  YAML: 0
 configure_requires:
   Module::Build: 0.36
 generated_by: 'Module::Build version 0.3603'
@@ -15,19 +23,12 @@ name: ParseUtil-Domain
 provides:
   ParseUtil::Domain:
     file: lib/ParseUtil/Domain.pm
-    version: v1.0.1
+    version: v1.0.2
 requires:
   Net::IDN::Encode: 0
   Net::IDN::Punycode: 0
   Perl6::Export::Attrs: 0
-  Perl::Critic: 0
-  Smart::Comments: 0
-  Test::Class: 0
-  Test::Deep: 0
-  Test::More: 0
-  Test::Perl::Critic: 0
-  YAML: 0
   version: 0.77
 resources:
   license: http://dev.perl.org/licenses/
-version: v1.0.1
+version: v1.0.2
