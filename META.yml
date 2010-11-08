@@ -11,6 +11,7 @@ build_requires:
   Test::Deep: 0
   Test::More: 0
   Test::Perl::Critic: 0
+  Unicode::CharName: 0
   YAML: 0
 configure_requires:
   Module::Build: 0.36
@@ -23,7 +24,7 @@ name: ParseUtil-Domain
 provides:
   ParseUtil::Domain:
     file: lib/ParseUtil/Domain.pm
-    version: v1.0.2
+    version: v1.0.3
 requires:
   Net::IDN::Encode: 0
   Net::IDN::Punycode: 0
@@ -31,4 +32,4 @@ requires:
   version: 0.77
 resources:
   license: http://dev.perl.org/licenses/
-version: v1.0.2
+version: v1.0.3
