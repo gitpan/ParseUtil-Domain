@@ -3,7 +3,7 @@ package ParseUtil::Domain;
 use strict;
 use warnings;
 
-use version 0.77; our $VERSION = qv("v1.0.3");
+use version 0.77; our $VERSION = qv("v1.1.0");
 use Perl6::Export::Attrs;
 use ParseUtil::Domain::ConfigData;
 use Net::IDN::Encode ':all';
@@ -16,7 +16,10 @@ use utf8;
 
 sub parse_domain : Export(:DEFAULT) {    #{{{
     my $name = shift;
-    my @name_segments = split /\@/, $name;
+    open my $utf8h, "<:encoding(utf8)", \$name;
+    my $utf8_name = do { local $/; <$utf8h>;};
+    close $utf8h;
+    my @name_segments = split /\@/, $utf8_name;
     ### namesegments : Dump(\@name_segments)
 
     my @segments = split /[\.\x{FF0E}\x{3002}\x{FF61}]/, $name_segments[-1];
@@ -54,28 +57,29 @@ sub _find_zone {    #{{{
 
     my ( $possible_tld, $possible_thld );
     my ( $sld_zone_ace, $tld_zone_ace ) =
-      map { domain_to_ascii( nameprep $_) }$sld, $tld;
-      my $thld_zone_ace;
-       $thld_zone_ace = domain_to_ascii( nameprep $thld) if $thld;
+      map { domain_to_ascii( nameprep $_) } $sld, $tld;
+    my $thld_zone_ace;
+    $thld_zone_ace = domain_to_ascii( nameprep $thld) if $thld;
     if ( $tld =~ /^de$/ ) {
         ### is a de domain
         $possible_tld = join "." => $tld, _puny_encode($sld);
     }
     else {
-        $possible_tld  = join "." => $tld_zone_ace, $sld_zone_ace;
-        $possible_thld = join "." => $possible_tld, $thld_zone_ace if
-        $thld_zone_ace;
+        $possible_tld = join "." => $tld_zone_ace, $sld_zone_ace;
+        $possible_thld = join "." => $possible_tld,
+          $thld_zone_ace
+          if $thld_zone_ace;
     }
     my ( $zone, @zone_params );
 
-    if ($possible_thld and  $possible_thld =~ /\A$tld_regex\z/ ) {
+    if ( $possible_thld and $possible_thld =~ /\A$tld_regex\z/ ) {
         my $zone_ace = join "." => $thld_zone_ace, $sld_zone_ace, $tld_zone_ace;
         $zone = join "." => $thld, $sld, $tld;
         push @zone_params, zone_ace => $zone_ace;
     }
     elsif ( $possible_tld =~ /\A$tld_regex\z/ ) {
         push @{$domain_segments}, $thld;
-        my $zone_ace = join "." =>$sld_zone_ace, $tld_zone_ace ;
+        my $zone_ace = join "." => $sld_zone_ace, $tld_zone_ace;
         $zone = join "." => $sld, $tld;
         push @zone_params, zone_ace => $zone_ace;
     }
@@ -99,7 +103,7 @@ sub _punycode_segments {    #{{{
 
     if ( not $zone or $zone !~ /^de$/ ) {
         my $puny_encoded =
-          [ map { domain_to_ascii( nameprep $_) } @{$domain_segments} ];
+          [ map { domain_to_ascii( nameprep( lc $_)) } @{$domain_segments} ];
         my $puny_decoded = [ map { domain_to_unicode($_) } @{$puny_encoded} ];
         return {
             domain     => ( join "." => @{$puny_decoded} ),
@@ -109,7 +113,7 @@ sub _punycode_segments {    #{{{
 
     # Have to avoid the nameprep step for .de domains now that DENIC has
     # decided to allow the German "sharp S".
-    my $puny_encoded = [ map { _puny_encode($_) } @{$domain_segments} ];
+    my $puny_encoded = [ map { _puny_encode(lc $_) } @{$domain_segments} ];
     my $puny_decoded = [ map { _puny_decode($_) } @{$puny_encoded} ];
     return {
         domain     => ( join "." => @{$puny_decoded} ),
@@ -131,6 +135,7 @@ sub _puny_encode {    #{{{
 
 sub _puny_decode {    #{{{
     my $encoded = shift;
+    return $encoded unless $encoded =~ /xn--/;
     $encoded =~ s/^xn--//;
     ### decoding : $encoded
     my $test_decode = decode_punycode($encoded);
@@ -147,7 +152,9 @@ __END__
 
 =head1 NAME
 
-ParseUtil::Domain - Utility for parsing domain name into its constituent
+=encoding utf8
+
+ParseUtil::Domain - Utility for parsing a domain name into its constituent
 components.
 
 =head1 SYNOPSIS
@@ -195,8 +202,8 @@ Examples:
 
   1. 'somedomain.com' 
   2. 'test.xn--o3cw4h'
-  3. 'blo\x{DF}.co.at'
-  4. 'blo\x{DF}.de'
+  3. 'bloß.co.at'
+  4. 'bloß.de'
 
 
 =back
@@ -225,7 +232,7 @@ Examples:
   2.
   { 
     domain => 'test',
-    zone => '\x{E44}\x{E17}\x{E22}',
+    zone => 'ไทย',
     domain_ace => 'test',
     zone_ace => 'xn--o3cw4h'
    }
@@ -240,7 +247,7 @@ Examples:
 
   4.
   { 
-    domain => 'blo\x{DF}',
+    domain => 'bloß',
     zone => 'de',
     domain_ace => 'xn--blo-7ka',
     zone_ace => 'de'
