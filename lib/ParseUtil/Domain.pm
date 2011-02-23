@@ -3,7 +3,7 @@ package ParseUtil::Domain;
 use strict;
 use warnings;
 
-use version 0.77; our $VERSION = qv("v1.1.0");
+use version 0.77; our $VERSION = qv("v1.2.0");
 use Perl6::Export::Attrs;
 use ParseUtil::Domain::ConfigData;
 use Net::IDN::Encode ':all';
@@ -14,12 +14,12 @@ use Net::IDN::Nameprep;
 use YAML;
 use utf8;
 
-sub parse_domain : Export(:DEFAULT) {    #{{{
+sub parse_domain : Export(:parse) {    #{{{
     my $name = shift;
     open my $utf8h, "<:encoding(utf8)", \$name;
     my $utf8_name = do { local $/; <$utf8h>;};
     close $utf8h;
-    my @name_segments = split /\@/, $utf8_name;
+    my @name_segments = split /\Q@\E/, $utf8_name;
     ### namesegments : Dump(\@name_segments)
 
     my @segments = split /[\.\x{FF0E}\x{3002}\x{FF61}]/, $name_segments[-1];
@@ -159,7 +159,7 @@ components.
 
 =head1 SYNOPSIS
 
-  use ParseUtil::Domain;
+  use ParseUtil::Domain ':parse';
 
   my $processed = parse_domain("somedomain.com");
     #   $processed == { 
