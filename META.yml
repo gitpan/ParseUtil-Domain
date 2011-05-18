@@ -15,7 +15,7 @@ build_requires:
   YAML: 0
 configure_requires:
   Module::Build: 0.36
-generated_by: 'Module::Build version 0.3607'
+generated_by: 'Module::Build version 0.3603'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -24,7 +24,7 @@ name: ParseUtil-Domain
 provides:
   ParseUtil::Domain:
     file: lib/ParseUtil/Domain.pm
-    version: 2.03
+    version: 2.04
 requires:
   Net::IDN::Encode: 0
   Net::IDN::Punycode: 0
@@ -32,4 +32,4 @@ requires:
   version: 0.77
 resources:
   license: http://dev.perl.org/licenses/
-version: 2.03
+version: 2.04
