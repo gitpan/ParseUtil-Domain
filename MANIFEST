@@ -7,3 +7,4 @@ README
 t/lib/ParseDomain.pm
 t/parse_ascii.t
 t/parse_idn.t
+META.json
