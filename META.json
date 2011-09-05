@@ -45,7 +45,7 @@
    "provides" : {
       "ParseUtil::Domain" : {
          "file" : "lib/ParseUtil/Domain.pm",
-         "version" : "2.05"
+         "version" : "2.06"
       }
    },
    "release_status" : "stable",
@@ -54,5 +54,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "2.05"
+   "version" : "2.06"
 }
