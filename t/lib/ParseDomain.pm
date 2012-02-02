@@ -6,14 +6,16 @@ use warnings;
 use base qw(Test::Class);
 
 use Test::More;
+
 #use Test::Deep ();
 use Test::Exception;
 use utf8;
-use YAML;
+#use YAML;
+#use Smart::Comments;
 
 use ParseUtil::Domain ':parse';
 
-sub t010_split_ascii_domain_tld : Test(15) {    #{{{
+sub t010_split_ascii_domain_tld : Test(15) {
     my $self         = shift;
     my $test_domains = [
 
@@ -60,9 +62,9 @@ sub t010_split_ascii_domain_tld : Test(15) {    #{{{
     }
     qr/Could not find tld/, 'Unknown tlds not processed.';
 
-}    #}}}
+}
 
-sub t020_split_unicode_domain_tld : Test(20) {    #{{{
+sub t020_split_unicode_domain_tld : Test(20) {
     my $self          = shift;
     my $domain_to_ace = [
         {
@@ -142,6 +144,20 @@ sub t020_split_unicode_domain_tld : Test(20) {    #{{{
             "Expected " . $test_domain->{ace} );
 
     }
-}    #}}}
+}
+
+sub t100_undefined_mappings :Test(1) {
+    my $self = shift;
+    
+    my $test_domain =  'xn--blo-7ka.com' ;
+    throws_ok {
+       my $result =  parse_domain($test_domain);
+       ### result : Dump($result)
+    } qr/Undefined mapping/,  "Mapping should not be defined.";
+
+    
+}
+
+
 
 1;

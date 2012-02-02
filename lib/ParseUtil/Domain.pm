@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 ## no critic
-our $VERSION = '2.10';
+our $VERSION = '2.11';
 $VERSION = eval $VERSION;
 ## use critic
 
@@ -13,6 +13,8 @@ use ParseUtil::Domain::ConfigData;
 use Net::IDN::Encode ':all';
 use Net::IDN::Punycode ':all';
 use Net::IDN::Nameprep;
+use List::MoreUtils qw/any/;
+use Carp;
 
 #use Smart::Comments;
 use YAML;
@@ -22,7 +24,7 @@ sub parse_domain : Export(:parse) {
     my $name = shift;
     $name =~ s/\s//gs;
     open my $utf8h, "<:encoding(utf8)", \$name;
-    my $utf8_name = do { local $/; <$utf8h>;};
+    my $utf8_name = do { local $/; <$utf8h>; };
     close $utf8h;
     my @name_segments = split /\Q@\E/, $utf8_name;
     ### namesegments : Dump(\@name_segments)
@@ -108,8 +110,9 @@ sub _punycode_segments {
 
     if ( not $zone or $zone !~ /^de$/ ) {
         my $puny_encoded =
-          [ map { domain_to_ascii( nameprep( lc $_)) } @{$domain_segments} ];
+          [ map { domain_to_ascii( nameprep( lc $_ ) ) } @{$domain_segments} ];
         my $puny_decoded = [ map { domain_to_unicode($_) } @{$puny_encoded} ];
+        croak "Undefined mapping!" if any { /\x{DF}/ } @{$puny_decoded};
         return {
             domain     => ( join "." => @{$puny_decoded} ),
             domain_ace => ( join "." => @{$puny_encoded} )
@@ -118,7 +121,7 @@ sub _punycode_segments {
 
     # Have to avoid the nameprep step for .de domains now that DENIC has
     # decided to allow the German "sharp S".
-    my $puny_encoded = [ map { _puny_encode(lc $_) } @{$domain_segments} ];
+    my $puny_encoded = [ map { _puny_encode( lc $_ ) } @{$domain_segments} ];
     my $puny_decoded = [ map { _puny_decode($_) } @{$puny_encoded} ];
     return {
         domain     => ( join "." => @{$puny_decoded} ),
@@ -148,7 +151,7 @@ sub _puny_decode {
     return $encoded if $encoded eq $test_decode;
     return decode_punycode($encoded);
 
-} 
+}
 
 "one, but we're not the same";
 
