@@ -1,5 +1,5 @@
 ---
-abstract: "Utility for parsing a domain name into its constituent\ncomponents."
+abstract: 'Utility for parsing a domain name into its components.'
 author:
   - 'William Travis Holton <wtravisholton@yahoo.de>'
 build_requires:
@@ -25,7 +25,7 @@ name: ParseUtil-Domain
 provides:
   ParseUtil::Domain:
     file: lib/ParseUtil/Domain.pm
-    version: 2.11
+    version: 2.12
 requires:
   Carp: 0
   List::MoreUtils: 0
@@ -36,4 +36,4 @@ requires:
   version: 0.77
 resources:
   license: http://dev.perl.org/licenses/
-version: 2.11
+version: 2.12

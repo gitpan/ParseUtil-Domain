@@ -3,11 +3,11 @@
 use strict;
 use warnings;
 
-
 use feature qw/say switch/;
 
-use ParseUtil::Domain ':parse';
+use ParseUtil::Domain ':simple';
 binmode( STDOUT, "utf8" );
+binmode( STDERR, "utf8" );
 binmode( STDIN,  "utf8" );
 my @input;
 if (@ARGV) {
@@ -18,30 +18,25 @@ else {
 }
 
 foreach my $domain (@input) {
-    my @keys;
-    given ($domain) {
-        when (/\.?xn--/) {
-            @keys = qw/domain zone/;
-        }
-        default {
-            @keys = qw/domain_ace zone_ace/;
-        }
+    chomp $domain;
+    my $parsed;
+    local $@;
+    eval { say puny_convert($domain); };
+    if ( my $e = $@ ) {
+        print STDERR "# " . $domain . ":\t" . $e;
     }
-    my $parsed = parse_domain($domain);
-    say join "." => @{$parsed}{@keys};
 }
 exit(0);
-
 
 __END__
 
 =head1 NAME
 
-    convertpuny - Commandline puny en/decoder.
+    punyconvert - Commandline puny en/decoder.
 
 =head1 USAGE
 
-    convertpuny xn--fa-hia.de
+    punyconvert xn--fa-hia.de
     faß.de
 
 =head1 DESCRIPTION

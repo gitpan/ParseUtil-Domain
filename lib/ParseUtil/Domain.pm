@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 ## no critic
-our $VERSION = '2.11';
+our $VERSION = '2.12';
 $VERSION = eval $VERSION;
 ## use critic
 
@@ -15,6 +15,8 @@ use Net::IDN::Punycode ':all';
 use Net::IDN::Nameprep;
 use List::MoreUtils qw/any/;
 use Carp;
+
+use feature 'switch';
 
 #use Smart::Comments;
 use YAML;
@@ -53,6 +55,23 @@ sub parse_domain : Export(:parse) {
     }
     return $puny_processed;
 
+}
+
+sub puny_convert : Export(:simple) {
+    my $domain = shift;
+    my @keys;
+    given ($domain) {
+        when (/\.?xn--/) {
+            @keys = qw/domain zone/;
+        }
+        default {
+            @keys = qw/domain_ace zone_ace/;
+        }
+    }
+    my $parsed = parse_domain($domain);
+    my $parsed_domain = join "." => @{$parsed}{@keys};
+
+    return $parsed_domain;
 }
 
 sub _find_zone {
@@ -112,7 +131,8 @@ sub _punycode_segments {
         my $puny_encoded =
           [ map { domain_to_ascii( nameprep( lc $_ ) ) } @{$domain_segments} ];
         my $puny_decoded = [ map { domain_to_unicode($_) } @{$puny_encoded} ];
-        croak "Undefined mapping!" if any { /\x{DF}/ } @{$puny_decoded};
+        croak "Undefined mapping!"
+          if any { lc $_ ne nameprep( lc $_ ) } @{$puny_decoded};
         return {
             domain     => ( join "." => @{$puny_decoded} ),
             domain_ace => ( join "." => @{$puny_encoded} )
@@ -162,8 +182,7 @@ __END__
 
 =encoding utf8
 
-ParseUtil::Domain - Utility for parsing a domain name into its constituent
-components.
+ParseUtil::Domain - Utility for parsing a domain name into its components.
 
 =head1 SYNOPSIS
 
@@ -183,9 +202,9 @@ components.
 
 Just another tool for parsing domain names.  This module makes use of the data
 provided by the I<Public Suffix List> (http://publicsuffix.org/list/) to parse
-tlds.  For completeness it tries to provide the respective puny encoded and decoded
-domain and tld part of a domain name.  This includes proper handling of the
-B<LATIN SHARP S> which is now allowed by DENIC eG (.de).
+tlds.  
+
+It also provides respective puny encoded and decoded versions of the parsed domain.
 
 
 =head1 INTERFACE
@@ -269,6 +288,13 @@ Examples:
 
 =back
 
+=head2 puny_convert
+
+Toggles a domain between puny encoded and decoded versions.
+
+   $puny_decoded = puny_convert($puny_encoded);
+   $puny_encoded = puny_convert($puny_decoded);
+
 
 
 =head1 DEPENDENCIES
@@ -297,7 +323,17 @@ The Public Suffix List at http://publicsuffix.org/list/
 
 =head1 CHANGES
 
-Added several of the I<anticipated> new TLDs (nTLDs) to the parser.
+=over 3
 
+=item *
+Added a subroutine L<puny_convert|ParseUtil::Domain/"puny_convert"> that
+I<toggles> back and forth between puny encoded and decoded versions of a
+domain.
 
+=item *
+Added a script called c<punyconvert> for command line conversion.
 
+=item *
+I<croak> whenever the domain can't be mapped back to itself.
+
+=back

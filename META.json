@@ -1,5 +1,5 @@
 {
-   "abstract" : "Utility for parsing a domain name into its constituent\ncomponents.",
+   "abstract" : "Utility for parsing a domain name into its components.",
    "author" : [
       "William Travis Holton <wtravisholton@yahoo.de>"
    ],
@@ -48,7 +48,7 @@
    "provides" : {
       "ParseUtil::Domain" : {
          "file" : "lib/ParseUtil/Domain.pm",
-         "version" : "2.11"
+         "version" : "2.12"
       }
    },
    "release_status" : "stable",
@@ -57,5 +57,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "2.11"
+   "version" : "2.12"
 }

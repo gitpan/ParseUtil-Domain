@@ -1,4 +1,4 @@
-bin/convertpuny
+bin/punyconvert
 Build.PL
 data/effective_tld_names.txt
 lib/ParseUtil/Domain.pm
