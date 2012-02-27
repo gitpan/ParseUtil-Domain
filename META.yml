@@ -25,7 +25,7 @@ name: ParseUtil-Domain
 provides:
   ParseUtil::Domain:
     file: lib/ParseUtil/Domain.pm
-    version: 2.12
+    version: 2.13
 requires:
   Carp: 0
   List::MoreUtils: 0
@@ -36,4 +36,4 @@ requires:
   version: 0.77
 resources:
   license: http://dev.perl.org/licenses/
-version: 2.12
+version: 2.13
