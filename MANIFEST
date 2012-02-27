@@ -3,10 +3,10 @@ Build.PL
 data/effective_tld_names.txt
 lib/ParseUtil/Domain.pm
 MANIFEST			This list of files
-META.json
-META.yml
 README
 t/lib/ParseDomain.pm
 t/parse_ascii.t
 t/parse_idn.t
 t/undefined_mapping.t
+META.yml
+META.json
