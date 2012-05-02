@@ -16,7 +16,7 @@
    "prereqs" : {
       "build" : {
          "requires" : {
-            "Net::IDN::Encode" : 0,
+            "Net::IDN::Encode" : "2.003",
             "Perl::Critic" : 0,
             "Regexp::Assemble::Compressed" : 0,
             "Smart::Comments" : 0,
@@ -24,8 +24,10 @@
             "Test::Deep" : 0,
             "Test::More" : 0,
             "Test::Perl::Critic" : 0,
-            "Unicode::CharName" : 0,
-            "YAML" : 0
+            "Test::Routine" : 0,
+            "Unicode::CharName" : "1.07",
+            "YAML" : 0,
+            "namespace::autoclean" : 0
          }
       },
       "configure" : {
@@ -35,11 +37,11 @@
       },
       "runtime" : {
          "requires" : {
-            "Carp" : 0,
+            "Carp" : "1.17",
             "List::MoreUtils" : 0,
-            "Net::IDN::Encode" : 0,
-            "Net::IDN::Nameprep" : 0,
-            "Net::IDN::Punycode" : 0,
+            "Net::IDN::Encode" : "2.003",
+            "Net::IDN::Nameprep" : "1.101",
+            "Net::IDN::Punycode" : "1.1",
             "Perl6::Export::Attrs" : 0,
             "version" : "0.77"
          }
@@ -48,14 +50,14 @@
    "provides" : {
       "ParseUtil::Domain" : {
          "file" : "lib/ParseUtil/Domain.pm",
-         "version" : "2.14"
+         "version" : "2.14_002"
       }
    },
-   "release_status" : "stable",
+   "release_status" : "testing",
    "resources" : {
       "license" : [
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "2.14"
+   "version" : "2.14_002"
 }

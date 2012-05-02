@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 ## no critic
-our $VERSION = '2.14';
+our $VERSION = '2.15';
 $VERSION = eval $VERSION;
 ## use critic
 
@@ -189,12 +189,13 @@ ParseUtil::Domain - Utility for parsing a domain name into its components.
   use ParseUtil::Domain ':parse';
 
     my $processed = parse_domain("somedomain.com");
-    $processed == { 
-        domain => 'somedomain',
-        domain_ace => 'somedomain',
-        zone => 'com',
-        zone_ace => 'com'
-    }
+    #$processed:
+    #{ 
+        #domain => 'somedomain',
+        #domain_ace => 'somedomain',
+        #zone => 'com',
+        #zone_ace => 'com'
+    #}
 
 
 =head1 DESCRIPTION
@@ -210,77 +211,60 @@ It also provides respective puny encoded and decoded versions of the parsed doma
 =head1 INTERFACE
 
 
-
 =head2 parse_domain
+
 
 =over 2
 
 =item
-Arguments
+parse_domain(string)
 
 
 =over 3
 
 =item
-C<string>
-
-
 Examples:
 
-  1. 'somedomain.com' 
-  2. 'test.xn--o3cw4h'
-  3. 'bloß.co.at'
-  4. 'bloß.de'
 
+   1. parse_domain('somedomain.com');
+ 
+    Result:
+    {
+        domain     => 'somedomain',
+        zone       => 'com',
+        domain_ace => 'somedomain',
+        zone_ace   => 'com'
+    }
 
-=back
+  2. parse_domain('test.xn--o3cw4h');
 
+    Result: 
+    {
+        domain     => 'test',
+        zone       => 'ไทย',
+        domain_ace => 'test',
+        zone_ace   => 'xn--o3cw4h'
+    }
 
-=item
-Return
+  3. parse_domain('bloß.co.at');
 
-=over 3
+    Result:
+    {
+        domain     => 'bloss',
+        zone       => 'co.at',
+        domain_ace => 'bloss',
+        zone_ace   => 'co.at'
+    }
 
+  4. parse_domain('bloß.de');
 
-=item
-C<HASHREF>
-
-
-Examples:
-  
-  1.
-  { 
-    domain => 'somedomain',
-    zone => 'com',
-    domain_ace => 'somedomain',
-    zone_ace => 'com'
-   }
-
-  2.
-  { 
-    domain => 'test',
-    zone => 'ไทย',
-    domain_ace => 'test',
-    zone_ace => 'xn--o3cw4h'
-   }
-
-  3.
-  { 
-    domain => 'bloss',
-    zone => 'co.at',
-    domain_ace => 'bloss',
-    zone_ace => 'co.at'
-   }
-
-  4.
-  { 
-    domain => 'bloß',
-    zone => 'de',
-    domain_ace => 'xn--blo-7ka',
-    zone_ace => 'de'
-   }
-
-
+    Result:
+    {
+        domain     => 'bloß',
+        zone       => 'de',
+        domain_ace => 'xn--blo-7ka',
+        zone_ace   => 'de'
+    }
 
 =back
 
@@ -292,8 +276,17 @@ Examples:
 
 Toggles a domain between puny encoded and decoded versions.
 
-   $puny_decoded = puny_convert($puny_encoded);
-   $puny_encoded = puny_convert($puny_decoded);
+
+   use ParseUtil::Domain ':simple';
+
+   my $result = puny_convert('bloß.de');
+   # $result: xn--blo-7ka.de
+
+   my $reverse = puny_convert('xn--blo-7ka.de');
+   # $reverse: bloß.de
+
+
+
 
 
 
@@ -324,6 +317,10 @@ The Public Suffix List at http://publicsuffix.org/list/
 =head1 CHANGES
 
 =over 3
+
+=item *
+Added .kiwi
+
 
 =item *
 Added a subroutine L<puny_convert|ParseUtil::Domain/"puny_convert"> that
