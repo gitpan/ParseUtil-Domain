@@ -1,12 +1,8 @@
-package ParseUtil::Domain;
+package ParseUtil::Domain 2.16;
 
 use strict;
 use warnings;
 
-## no critic
-our $VERSION = '2.15';
-$VERSION = eval $VERSION;
-## use critic
 
 use Perl6::Export::Attrs;
 use ParseUtil::Domain::ConfigData;
@@ -19,7 +15,7 @@ use Carp;
 use feature 'switch';
 
 #use Smart::Comments;
-use YAML;
+#use YAML;
 use utf8;
 
 sub parse_domain : Export(:parse) {
@@ -201,7 +197,7 @@ ParseUtil::Domain - Utility for parsing a domain name into its components.
 =head1 DESCRIPTION
 
 
-Just another tool for parsing domain names.  This module makes use of the data
+A tool for parsing domain names.  This module makes use of the data
 provided by the I<Public Suffix List> (http://publicsuffix.org/list/) to parse
 tlds.  
 
@@ -317,6 +313,9 @@ The Public Suffix List at http://publicsuffix.org/list/
 =head1 CHANGES
 
 =over 3
+
+=item *
+Added .design
 
 =item *
 Added .kiwi
