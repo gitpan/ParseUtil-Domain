@@ -2,6 +2,7 @@
 bin/punyconvert
 Build.PL
 data/effective_tld_names.txt
+data/strings-1200utc-13jun12-en.csv
 lib/ParseUtil/Domain.pm
 MANIFEST			This list of files
 META.json
