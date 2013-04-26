@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 ## no critic
-our $VERSION = '2.23';
+our $VERSION = '2.24';
 $VERSION = eval $VERSION;
 ## use critic
 
@@ -328,20 +328,11 @@ The Public Suffix List at http://publicsuffix.org/list/
 
 
 =item *
-gTLDs
-
-.bcm, .design, .kiwi and several others
-
+Updated public suffix list.
 
 =item *
-Added a subroutine L<puny_convert|ParseUtil::Domain/"puny_convert"> that
-I<toggles> back and forth between puny encoded and decoded versions of a
-domain.
+Added a bunch of new TLDs
 
-=item *
-Added a script called C<punyconvert> for command line conversion.
 
-=item *
-I<croak> whenever the domain can't be mapped back to itself.
 
 =back
