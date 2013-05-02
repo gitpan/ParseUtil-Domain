@@ -14,4 +14,6 @@ t/lib/UnicodeToggle.pm
 t/parse_ascii.t
 t/parse_ascii_test_routine.t
 t/parse_idn.t
+t/perlcritic.t
+t/perlcriticrc
 t/undefined_mapping.t

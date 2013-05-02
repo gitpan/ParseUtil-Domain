@@ -1,10 +1,10 @@
 {
    "abstract" : "Domain parser and puny encoder/decoder.",
    "author" : [
-      "William Travis Holton <wtravisholton@yahoo.de>"
+      "Trav Holton <heytrav@cpan.org>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.4004, CPAN::Meta::Converter version 2.120630",
+   "generated_by" : "Module::Build version 0.4004, CPAN::Meta::Converter version 2.130880",
    "license" : [
       "perl_5"
    ],
@@ -26,7 +26,6 @@
             "Test::Perl::Critic" : "0",
             "Test::Routine" : "0",
             "Unicode::CharName" : "1.07",
-            "YAML" : "0",
             "namespace::autoclean" : "0"
          }
       },
@@ -38,26 +37,28 @@
       "runtime" : {
          "requires" : {
             "Carp" : "1.17",
-            "List::MoreUtils" : "0",
             "Net::IDN::Encode" : "2.003",
             "Net::IDN::Nameprep" : "1.101",
             "Net::IDN::Punycode" : "1.1",
             "Perl6::Export::Attrs" : "0",
-            "version" : "0.77"
+            "perl5i::2" : "0"
          }
       }
    },
    "provides" : {
       "ParseUtil::Domain" : {
          "file" : "lib/ParseUtil/Domain.pm",
-         "version" : "2.26"
+         "version" : "2.27"
       }
    },
    "release_status" : "stable",
    "resources" : {
       "license" : [
          "http://dev.perl.org/licenses/"
-      ]
+      ],
+      "repository" : {
+         "url" : "git://github.com/heytrav/ParseUtil-Domain.git"
+      }
    },
-   "version" : "2.26"
+   "version" : "2.27"
 }

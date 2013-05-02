@@ -56,16 +56,19 @@ EOF
 my $builder = $class->new(
     module_name          => 'ParseUtil::Domain',
     license              => 'perl',
-    dist_author          => 'William Travis Holton <wtravisholton@yahoo.de>',
+    dist_author          => 'Trav Holton <heytrav@cpan.org>',
     dist_version_from    => 'lib/ParseUtil/Domain.pm',
     recursive_test_files => 1,
-    repository           => 'git://github.com/heytrav/ParseUtil-Domain.git',
-    configure_requires   => { 'Module::Build' => 0.4 },
-    build_requires       => {
+    meta_merge           => {
+        resources => {
+            repository => 'git://github.com/heytrav/ParseUtil-Domain.git',
+        }
+    },
+    configure_requires => { 'Module::Build' => 0.4 },
+    build_requires     => {
         'Regexp::Assemble::Compressed' => 0,
         'Perl::Critic'                 => 0,
         'Smart::Comments'              => 0,
-        'YAML'                         => 0,
         'Test::More'                   => 0,
         'Test::Class'                  => 0,
         'Test::Deep'                   => 0,
@@ -76,13 +79,12 @@ my $builder = $class->new(
         'namespace::autoclean'         => 0,
     },
     requires => {
-        'version'              => 0.77,
         'Carp'                 => 1.17,
         'Net::IDN::Encode'     => 2.003,
         'Net::IDN::Nameprep'   => 1.101,
         'Net::IDN::Punycode'   => 1.100,
         'Perl6::Export::Attrs' => 0,
-        'List::MoreUtils'      => 0,
+        'perl5i::2'            => 0,
     },
     add_to_cleanup => ['ParseUtil-*'],
     tld_data_files =>
