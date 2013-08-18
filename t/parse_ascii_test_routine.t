@@ -7,7 +7,7 @@ use Test::More tests => 2;
 use Test::Routine::Util;
 
 run_tests(
-    'Test toggle between unicode and puny-encoded ascii',
+    'Test toggle between puny-encoded ascii and unicode',
     ['AsciiToggle','ToggleTester']
 );
 

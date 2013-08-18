@@ -11,6 +11,7 @@ use namespace::autoclean;
 has domains_to_test => (
     is      => 'ro',
     isa     => 'ArrayRef',
+    lazy    => 1,
     builder => 'get_domains_to_test'
 );
 
@@ -24,6 +25,7 @@ test puny_toggle => { desc => 'Toggle unicode <-> ascii domains' } => sub {
 
     my $domains_to_test = $self->domains_to_test();
     foreach my $domain ( @{$domains_to_test} ) {
+        say $domain;
         lives_ok {
             puny_convert($domain);
         }
