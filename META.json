@@ -48,7 +48,7 @@
    "provides" : {
       "ParseUtil::Domain" : {
          "file" : "lib/ParseUtil/Domain.pm",
-         "version" : "2.30"
+         "version" : "2.31"
       }
    },
    "release_status" : "stable",
@@ -60,5 +60,5 @@
          "url" : "git://github.com/heytrav/ParseUtil-Domain.git"
       }
    },
-   "version" : "2.30"
+   "version" : "2.31"
 }
