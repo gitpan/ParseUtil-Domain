@@ -1,7 +1,7 @@
 package ParseUtil::Domain;
 
 ## no critic
-our $VERSION = '2.32';
+our $VERSION = '2.33';
 $VERSION = eval $VERSION;
 ## use critic
 
@@ -393,8 +393,6 @@ Updated with latest version of the public suffix list.
 =item *
 Added a bunch of new TLDs (nTLDs).
 
-=item *
-Now uses L<perl5i>.
 
 
 =back

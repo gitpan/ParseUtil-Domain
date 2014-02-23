@@ -4,7 +4,7 @@
       "Trav Holton <heytrav@cpan.org>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.4004, CPAN::Meta::Converter version 2.131560",
+   "generated_by" : "Module::Build version 0.4003, CPAN::Meta::Converter version 2.120921",
    "license" : [
       "perl_5"
    ],
@@ -50,7 +50,7 @@
    "provides" : {
       "ParseUtil::Domain" : {
          "file" : "lib/ParseUtil/Domain.pm",
-         "version" : "2.32"
+         "version" : "2.33"
       }
    },
    "release_status" : "stable",
@@ -62,5 +62,5 @@
          "url" : "git://github.com/heytrav/ParseUtil-Domain.git"
       }
    },
-   "version" : "2.32"
+   "version" : "2.33"
 }
