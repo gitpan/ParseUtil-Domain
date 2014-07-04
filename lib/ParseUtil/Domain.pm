@@ -1,12 +1,13 @@
 package ParseUtil::Domain;
 
 ## no critic
-our $VERSION = '2.34';
+our $VERSION = '2.35';
 $VERSION = eval $VERSION;
 ## use critic
 
 use Carp;
 
+use perl5i::2;
 use autobox;
 use autobox::Core;
 use List::MoreUtils qw/any/;
