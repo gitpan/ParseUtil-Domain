@@ -26,7 +26,7 @@ name: ParseUtil-Domain
 provides:
   ParseUtil::Domain:
     file: lib/ParseUtil/Domain.pm
-    version: '2.35'
+    version: '2.36'
 requires:
   Carp: '1.17'
   List::MoreUtils: '0'
@@ -36,7 +36,8 @@ requires:
   Perl6::Export::Attrs: '0'
   autobox: '0'
   autobox::Core: '0'
+  perl5i::2: '0'
 resources:
   license: http://dev.perl.org/licenses/
   repository: git://github.com/heytrav/ParseUtil-Domain.git
-version: '2.35'
+version: '2.36'

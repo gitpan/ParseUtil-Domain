@@ -43,14 +43,15 @@
             "Net::IDN::Punycode" : "1.1",
             "Perl6::Export::Attrs" : "0",
             "autobox" : "0",
-            "autobox::Core" : "0"
+            "autobox::Core" : "0",
+            "perl5i::2" : "0"
          }
       }
    },
    "provides" : {
       "ParseUtil::Domain" : {
          "file" : "lib/ParseUtil/Domain.pm",
-         "version" : "2.35"
+         "version" : "2.36"
       }
    },
    "release_status" : "stable",
@@ -62,5 +63,5 @@
          "url" : "git://github.com/heytrav/ParseUtil-Domain.git"
       }
    },
-   "version" : "2.35"
+   "version" : "2.36"
 }
