@@ -19,3 +19,4 @@ t/perlcritic.t
 t/perlcriticrc
 t/public_suffix_test.t
 t/undefined_mapping.t
+LICENSE
