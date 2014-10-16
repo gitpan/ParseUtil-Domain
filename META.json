@@ -16,16 +16,9 @@
    "prereqs" : {
       "build" : {
          "requires" : {
-            "Modern::Perl" : "0",
             "Net::IDN::Encode" : "2.003",
-            "Perl::Critic" : "0",
             "Regexp::Assemble::Compressed" : "0",
             "Smart::Comments" : "0",
-            "Test::Class" : "0",
-            "Test::Deep" : "0",
-            "Test::More" : "0",
-            "Test::Perl::Critic" : "0",
-            "Test::Routine" : "0",
             "Unicode::CharName" : "1.07",
             "namespace::autoclean" : "0"
          }
@@ -38,6 +31,8 @@
       "runtime" : {
          "requires" : {
             "Carp" : "1.17",
+            "English" : "0",
+            "File::Spec" : "0",
             "List::MoreUtils" : "0",
             "Modern::Perl" : "0",
             "Net::IDN::Encode" : "2.003",
@@ -48,12 +43,25 @@
             "autobox::Core" : "0",
             "utf8::all" : "0"
          }
+      },
+      "test" : {
+         "requires" : {
+            "Moose" : "0",
+            "Perl::Critic" : "0",
+            "Test::Class" : "0",
+            "Test::Deep" : "0",
+            "Test::Exception" : "0",
+            "Test::More" : "0",
+            "Test::Perl::Critic" : "0",
+            "Test::Routine" : "0",
+            "Test::Routine::Util" : "0"
+         }
       }
    },
    "provides" : {
       "ParseUtil::Domain" : {
          "file" : "lib/ParseUtil/Domain.pm",
-         "version" : "2.40"
+         "version" : "2.42"
       }
    },
    "release_status" : "stable",
@@ -65,5 +73,5 @@
          "url" : "git://github.com/heytrav/ParseUtil-Domain.git"
       }
    },
-   "version" : "2.40"
+   "version" : "2.42"
 }

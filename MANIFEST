@@ -1,9 +1,11 @@
 .travis.yml
 bin/punyconvert
 Build.PL
+Changes
 cpanfile
 data/effective_tld_names.txt
 lib/ParseUtil/Domain.pm
+LICENSE
 MANIFEST			This list of files
 META.json
 META.yml
@@ -19,4 +21,3 @@ t/perlcritic.t
 t/perlcriticrc
 t/public_suffix_test.t
 t/undefined_mapping.t
-LICENSE
