@@ -112,6 +112,7 @@ my $builder = $class->new(
         'Unicode::CharName'            => 1.07,
         'Test::Routine'                => 0,
         'namespace::autoclean'         => 0,
+        'Modern::Perl' => 0,
     },
     requires => {
         'Carp'                 => 1.17,
@@ -122,7 +123,8 @@ my $builder = $class->new(
         'autobox'              => 0,
         'autobox::Core'        => 0,
         'List::MoreUtils'      => 0,
-        'perl5i::2'            => 0,
+        'Modern::Perl' => 0,
+        'utf8::all' => 0,
     },
     add_to_cleanup => ['ParseUtil-*'],
     tld_data_files =>

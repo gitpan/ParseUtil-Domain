@@ -4,7 +4,7 @@
       "Trav Holton <heytrav@cpan.org>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.4205",
+   "generated_by" : "Module::Build version 0.4206",
    "license" : [
       "perl_5"
    ],
@@ -16,6 +16,7 @@
    "prereqs" : {
       "build" : {
          "requires" : {
+            "Modern::Perl" : "0",
             "Net::IDN::Encode" : "2.003",
             "Perl::Critic" : "0",
             "Regexp::Assemble::Compressed" : "0",
@@ -38,20 +39,21 @@
          "requires" : {
             "Carp" : "1.17",
             "List::MoreUtils" : "0",
+            "Modern::Perl" : "0",
             "Net::IDN::Encode" : "2.003",
             "Net::IDN::Nameprep" : "1.101",
             "Net::IDN::Punycode" : "1.1",
             "Perl6::Export::Attrs" : "0",
             "autobox" : "0",
             "autobox::Core" : "0",
-            "perl5i::2" : "0"
+            "utf8::all" : "0"
          }
       }
    },
    "provides" : {
       "ParseUtil::Domain" : {
          "file" : "lib/ParseUtil/Domain.pm",
-         "version" : "2.36"
+         "version" : "2.38"
       }
    },
    "release_status" : "stable",
@@ -63,5 +65,5 @@
          "url" : "git://github.com/heytrav/ParseUtil-Domain.git"
       }
    },
-   "version" : "2.36"
+   "version" : "2.38"
 }

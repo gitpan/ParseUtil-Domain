@@ -1,13 +1,14 @@
 package ParseUtil::Domain;
 
 ## no critic
-our $VERSION = '2.36';
+our $VERSION = '2.38';
 $VERSION = eval $VERSION;
 ## use critic
 
 use Carp;
 
-use perl5i::2;
+use Modern::Perl;
+use utf8::all;
 use autobox;
 use autobox::Core;
 use List::MoreUtils qw/any/;
@@ -229,6 +230,9 @@ __END__
 
 =encoding utf8
 
+
+=for HTML <a href="https://travis-ci.org/heytrav/ParseUtil-Domain"><img src="https://travis-ci.org/heytrav/ParseUtil-Domain.svg?branch=master"></a>
+
 ParseUtil::Domain - Domain parser and puny encoder/decoder.
 
 =head1 SYNOPSIS
@@ -382,8 +386,6 @@ The L<Public Suffix List|http://publicsuffix.org/list/>.
 
 =over 3
 
-=item *
-Go back to C<sub> style subroutines instead of C<func>. The L<perl5i> style functions seem to cause the debugger to die horribly.
 
 =item *
 Added extra I<prefix> and I<name> fields to output to separate the actual registered part of the domain from subdomains (or things like I<www>).

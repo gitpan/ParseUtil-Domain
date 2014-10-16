@@ -5,7 +5,9 @@ cpanfile
 data/effective_tld_names.txt
 lib/ParseUtil/Domain.pm
 MANIFEST			This list of files
-README
+META.json
+META.yml
+README.md
 t/lib/AsciiToggle.pm
 t/lib/ParseDomain.pm
 t/lib/ToggleTester.pm
@@ -17,5 +19,3 @@ t/perlcritic.t
 t/perlcriticrc
 t/public_suffix_test.t
 t/undefined_mapping.t
-META.yml
-META.json
